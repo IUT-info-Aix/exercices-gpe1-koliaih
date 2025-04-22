@@ -59,7 +59,7 @@ public class FenetreLogiciel extends Application {
         Button cancel = new Button("cancel");
         PasswordField passwordText = new PasswordField( );
         GridPane grid = new GridPane();
-        grid.setHgap(1);
+        grid.setHgap(2);
         grid.setVgap(3);
         grid.add(name, 0, 0);
         grid.add(nameText, 1, 0);
