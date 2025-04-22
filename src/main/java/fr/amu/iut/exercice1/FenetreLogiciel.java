@@ -27,8 +27,6 @@ public class FenetreLogiciel extends Application {
         // Création du conteneur principal
         VBox vbox = new VBox();
 
-
-
         // Création de la Barre de menu
         Menu menu1 = new Menu("File");
         menu1.getItems().addAll(new MenuItem("New"), new MenuItem("Open"), new MenuItem("Save"), new MenuItem("Close")) ;
