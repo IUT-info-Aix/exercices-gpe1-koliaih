@@ -45,6 +45,7 @@ public class FenetreLogiciel extends Application {
         Separator separator = new Separator(Orientation.VERTICAL);
         colonne.setAlignment( Pos.CENTER );
 
+
         colonne.setPadding(new Insets(10));
         HBox hbox = new HBox(colonne, separator);
 
