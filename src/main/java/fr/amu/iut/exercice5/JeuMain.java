@@ -14,6 +14,7 @@ public class JeuMain extends Application {
 
     private Scene scene;
     private BorderPane root;
+    ArrayList<Obstacles> Rectangle = new ArrayList<>();
 
     @Override
     public void start(Stage primaryStage) {
@@ -29,7 +30,7 @@ public class JeuMain extends Application {
         rec.setArcWidth(20);
         rec.setArcHeight(20);
 
-        ArrayList<Obstacles> Rectangle = new ArrayList<>();
+
 
         //Acteurs du jeu
         Personnage pacman = new Pacman();
@@ -92,6 +93,9 @@ public class JeuMain extends Application {
                     j2.deplacerAGauche();
                     break;
 
+            }
+            if (j1.contactMur(Rectangle)){
+                stage.close();
             }
 
 
