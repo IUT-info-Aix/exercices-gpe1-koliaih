@@ -82,10 +82,10 @@ class Personnage extends Group {
         return getBoundsInParent().contains(autrePersonnage.getBoundsInParent())
                 || autrePersonnage.getBoundsInParent().contains(getBoundsInParent());
     }
-    public Boolean contactMur( ArrayList <Obstacles> list){
-        Boolean R = false;
-        for (Obstacles obstacles : list) {
-            if (getBoundsInParent().contains(obstacles.getBoundsInParent()) || obstacles.getBoundsInParent().contains(getBoundsInParent())) {
+    boolean contactMur( ArrayList <Obstacle> list){
+        boolean R = false;
+        for (Obstacle obstacle : list) {
+            if (getBoundsInParent().contains(obstacle.getBoundsInParent()) || obstacle.getBoundsInParent().contains(getBoundsInParent())) {
                 R = true;
                 break;
             }
