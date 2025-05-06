@@ -17,6 +17,7 @@ public class LoginMain extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("exercice8/LoginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("exercice8/Login.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("FXML Custom Control");
         stage.show();

@@ -10,12 +10,13 @@
     <Text id="welcome-text" text="Welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
 
     <Label text="User Id:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-
-<!--   à compléter par un TextField et un Label -->
-
+    <TextField fx:id="name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   <Label text="Password" GridPane.columnIndex="0" GridPane.rowIndex="2" />
     <PasswordField fx:id="pwd" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-<!--  à compléter pour les boutons -->
+   <Button fx:id="ok" text="OK" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#okClicked"/>
+
+   <Button fx:id="cancel" text="CANCEL" GridPane.columnIndex="1" GridPane.rowIndex="3" onAction="#cancelClicked"/>
 
    <columnConstraints>
       <ColumnConstraints maxWidth="103.0" minWidth="63.0" prefWidth="83.0" />
