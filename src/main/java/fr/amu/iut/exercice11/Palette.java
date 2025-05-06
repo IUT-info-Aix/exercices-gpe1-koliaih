@@ -1,4 +1,4 @@
-package fr.amu.iut.exercice1;
+package fr.amu.iut.exercice11;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -30,6 +30,7 @@ public class Palette extends Application {
     private BorderPane root;
     private Pane panneau;
     private HBox boutons;
+    private Label label;
 
     private Label texteDuBas;
 
@@ -58,6 +59,24 @@ public class Palette extends Application {
         bleu = new Button("Bleu");
 
         /* VOTRE CODE ICI */
+        vert.setOnMouseClicked(event -> { nbVert++; label.setText("Vert choisit " + nbVert + " fois");
+            int r = Math.min(nbRouge * 50, 255);
+            int g = Math.min(nbVert * 50, 255);
+            int b = Math.min(nbBleu * 50, 255);
+            panneau.setStyle("-fx-background-color: rgb(" + r + "," + g + "," + b + ");");
+        });
+        rouge.setOnMouseClicked(event -> { nbRouge++;  label.setText("Rouge choisit " + nbRouge + " fois");
+            int r = Math.min(nbRouge * 50, 255);
+            int g = Math.min(nbVert * 50, 255);
+            int b = Math.min(nbBleu * 50, 255);
+            panneau.setStyle("-fx-background-color: rgb(" + r + "," + g + "," + b + ");");
+        });
+        bleu.setOnMouseClicked(event -> { nbBleu++; label.setText("Bleu choisit " + nbBleu + " fois");
+            int r = Math.min(nbRouge * 50, 255);
+            int g = Math.min(nbVert * 50, 255);
+            int b = Math.min(nbBleu * 50, 255);
+            panneau.setStyle("-fx-background-color: rgb(" + r + "," + g + "," + b + ");");
+        });
 
         boutons.getChildren().addAll(vert, rouge, bleu);
 
