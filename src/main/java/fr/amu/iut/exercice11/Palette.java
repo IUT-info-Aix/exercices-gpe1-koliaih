@@ -39,7 +39,7 @@ public class Palette extends Application {
     public void start(Stage primaryStage) {
         root = new BorderPane();
 
-        texteDuHaut = new Label();
+        texteDuHaut = new Label("Cliquez sur un bouton");
         texteDuHaut.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         BorderPane.setAlignment(texteDuHaut, Pos.CENTER);
 
@@ -58,24 +58,30 @@ public class Palette extends Application {
         rouge = new Button("Rouge");
         bleu = new Button("Bleu");
 
+
         /* VOTRE CODE ICI */
-        vert.setOnMouseClicked(event -> { nbVert++; label.setText("Vert choisit " + nbVert + " fois");
-            int r = Math.min(nbRouge * 50, 255);
-            int g = Math.min(nbVert * 50, 255);
-            int b = Math.min(nbBleu * 50, 255);
-            panneau.setStyle("-fx-background-color: rgb(" + r + "," + g + "," + b + ");");
+        vert.setOnAction(event -> {
+            nbVert++;
+            panneau.setStyle("-fx-background-color: green");
+            texteDuBas.setText("Le vert c'est cool");
+            texteDuBas.setStyle("-fx-text-fill: green");
+            texteDuHaut.setText("Vert choisi " + nbVert + " fois");
         });
-        rouge.setOnMouseClicked(event -> { nbRouge++;  label.setText("Rouge choisit " + nbRouge + " fois");
-            int r = Math.min(nbRouge * 50, 255);
-            int g = Math.min(nbVert * 50, 255);
-            int b = Math.min(nbBleu * 50, 255);
-            panneau.setStyle("-fx-background-color: rgb(" + r + "," + g + "," + b + ");");
+
+        rouge.setOnAction(event -> {
+            nbRouge++;
+            panneau.setStyle("-fx-background-color: red");
+            texteDuBas.setText("Le rouge c'est la meilleur couleur !!");
+            texteDuBas.setStyle("-fx-text-fill: red");
+            texteDuHaut.setText("Rouge choisi " + nbRouge + " fois");
         });
-        bleu.setOnMouseClicked(event -> { nbBleu++; label.setText("Bleu choisit " + nbBleu + " fois");
-            int r = Math.min(nbRouge * 50, 255);
-            int g = Math.min(nbVert * 50, 255);
-            int b = Math.min(nbBleu * 50, 255);
-            panneau.setStyle("-fx-background-color: rgb(" + r + "," + g + "," + b + ");");
+
+        bleu.setOnAction(event -> {
+            nbBleu++;
+            panneau.setStyle("-fx-background-color: blue");
+            texteDuBas.setText("Le bleu c'est pas mal...");
+            texteDuBas.setStyle("-fx-text-fill: blue");
+            texteDuHaut.setText("Bleu choisi " + nbBleu + " fois");
         });
 
         boutons.getChildren().addAll(vert, rouge, bleu);

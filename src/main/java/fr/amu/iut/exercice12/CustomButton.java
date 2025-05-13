@@ -1,4 +1,4 @@
-package fr.amu.iut.exercice2;
+package fr.amu.iut.exercice12;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.Button;
