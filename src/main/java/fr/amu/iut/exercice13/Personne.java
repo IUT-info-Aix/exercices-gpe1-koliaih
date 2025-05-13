@@ -1,4 +1,4 @@
-package fr.amu.iut.exercice3;
+package fr.amu.iut.exercice13;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
