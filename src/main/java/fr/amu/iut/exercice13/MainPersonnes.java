@@ -1,23 +1,46 @@
 package fr.amu.iut.exercice13;
 
+import javafx.beans.Observable;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 @SuppressWarnings("Duplicates")
-public class MainPersonnes  {
+public class MainPersonnes {
 
     private static ObservableList<Personne> lesPersonnes;
 
     private static ListChangeListener<Personne> unChangementListener;
 
     public static void main(String[] args) {
+        lesPersonnes = FXCollections.observableArrayList(personne -> new Observable[]{personne.ageProperty()});
 
-        lesPersonnes = FXCollections.observableArrayList();
+        unChangementListener = change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    change.getAddedSubList().forEach(personne ->
+                            System.out.println(personne.getNom() + " a été ajouté.")
+                    );
+                }
+                if (change.wasRemoved()) {
+                    change.getRemoved().forEach(personne ->
+                            System.out.println(personne.getNom() + " a été supprimé.")
+                    );
+                }
+                if (change.wasUpdated()) {
+                    change.getList().forEach(personne ->
+                            System.out.println(personne.getNom() + " a maintenant " + personne.getAge() + " ans.")
+                    );
+                }
+            }
+        };
 
-//        unChangementListener = à compléter
-
+        // Ajout du listener à la liste
         lesPersonnes.addListener(unChangementListener);
+
+        question5();
     }
 
     public static void question1() {
@@ -55,8 +78,7 @@ public class MainPersonnes  {
         Personne jacques = new Personne("Jacques", 60);
         lesPersonnes.addAll(pierre, paul, jacques);
         for (Personne p : lesPersonnes)
-            p.setAge(p.getAge()+10);
+            p.setAge(p.getAge() + 10);
         lesPersonnes.removeAll(paul, pierre);
     }
 }
-
