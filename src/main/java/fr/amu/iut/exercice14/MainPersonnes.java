@@ -5,6 +5,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 
 @SuppressWarnings("Duplicates")
 public class MainPersonnes {
@@ -20,6 +21,53 @@ public class MainPersonnes {
 
         lesPersonnes = new SimpleListProperty<>(FXCollections.observableArrayList());
         ageMoyen = new SimpleIntegerProperty(0);
+
+        calculAgeMoyen = new IntegerBinding() {
+            {
+                // Mettre à jour le binding quand la liste change
+                lesPersonnes.addListener((observable, oldList, newList) -> {
+                    bindPersonnes();
+                    invalidate();
+                });
+                lesPersonnes.addListener((ListChangeListener<Personne>) change -> {
+                    while (change.next()) {
+                        if (change.wasAdded()) {
+                            for (Personne p : change.getAddedSubList()) {
+                                p.ageProperty().addListener(obs -> invalidate());
+                            }
+                        }
+                        if (change.wasRemoved()) {
+                            for (Personne p : change.getRemoved()) {
+                                p.ageProperty().removeListener(obs -> invalidate());
+                            }
+                        }
+                    }
+                    invalidate();
+                });
+                bindPersonnes();
+            }
+
+            private void bindPersonnes() {
+                super.unbind();
+                for (Personne p : lesPersonnes) {
+                    super.bind(p.ageProperty());
+                }
+            }
+
+            @Override
+            protected int computeValue() {
+                if (lesPersonnes.isEmpty()) return 0;
+                int somme = 0;
+                for (Personne p : lesPersonnes) {
+                    somme += p.ageProperty().get();
+                }
+                return somme / lesPersonnes.size();
+            }
+        };
+
+
+
+        ageMoyen.bind(calculAgeMoyen);
 
         question1();
 //        question2();
