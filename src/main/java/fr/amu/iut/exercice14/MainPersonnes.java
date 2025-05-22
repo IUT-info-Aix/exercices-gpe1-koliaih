@@ -5,7 +5,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 
 @SuppressWarnings("Duplicates")
 public class MainPersonnes {
@@ -15,62 +14,51 @@ public class MainPersonnes {
     private static IntegerProperty nbParisiens;
 
     private static IntegerBinding calculAgeMoyen;
-    private static IntegerBinding calculnbParisiens;
+    private static IntegerBinding calculNbParisiens;
 
     public static void main(String[] args) {
-
         lesPersonnes = new SimpleListProperty<>(FXCollections.observableArrayList());
         ageMoyen = new SimpleIntegerProperty(0);
+        nbParisiens = new SimpleIntegerProperty(0);
 
+        // Création du binding pour l'âge moyen
         calculAgeMoyen = new IntegerBinding() {
             {
-                // Mettre à jour le binding quand la liste change
-                lesPersonnes.addListener((observable, oldList, newList) -> {
-                    bindPersonnes();
-                    invalidate();
-                });
-                lesPersonnes.addListener((ListChangeListener<Personne>) change -> {
-                    while (change.next()) {
-                        if (change.wasAdded()) {
-                            for (Personne p : change.getAddedSubList()) {
-                                p.ageProperty().addListener(obs -> invalidate());
-                            }
-                        }
-                        if (change.wasRemoved()) {
-                            for (Personne p : change.getRemoved()) {
-                                p.ageProperty().removeListener(obs -> invalidate());
-                            }
-                        }
-                    }
-                    invalidate();
-                });
-                bindPersonnes();
-            }
-
-            private void bindPersonnes() {
-                super.unbind();
-                for (Personne p : lesPersonnes) {
-                    super.bind(p.ageProperty());
-                }
+                super.bind(lesPersonnes);
             }
 
             @Override
             protected int computeValue() {
-                if (lesPersonnes.isEmpty()) return 0;
-                int somme = 0;
-                for (Personne p : lesPersonnes) {
-                    somme += p.ageProperty().get();
+                int totalAge = 0;
+                for (Personne personne : lesPersonnes) {
+                    totalAge += personne.getAge();
                 }
-                return somme / lesPersonnes.size();
+                return lesPersonnes.size() > 0 ? totalAge / lesPersonnes.size() : 0;
             }
         };
-
-
-
         ageMoyen.bind(calculAgeMoyen);
 
+        // Création du binding pour le nombre de Parisiens
+        calculNbParisiens = new IntegerBinding() {
+            {
+                super.bind(lesPersonnes);
+            }
+
+            @Override
+            protected int computeValue() {
+                int count = 0;
+                for (Personne personne : lesPersonnes) {
+                    if ("Paris".equals(personne.getVilleDeNaissance())) {
+                        count++;
+                    }
+                }
+                return count;
+            }
+        };
+        nbParisiens.bind(calculNbParisiens);
+
         question1();
-//        question2();
+        question2();
     }
 
     public static void question1() {
@@ -100,6 +88,4 @@ public class MainPersonnes {
             p.setVilleDeNaissance("Paris");
         System.out.println("Il y a " + nbParisiens.getValue() + " parisiens");
     }
-
 }
-

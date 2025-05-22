@@ -20,16 +20,16 @@ public class Personne {
     public void setAge(int age) {
         this.age.setValue(age);
     }
-    public IntegerProperty ageProperty() {
-        return age;
-    }
 
+    public int getAge(){
+        return age.getValue();
+    }
 
     public void setVilleDeNaissance(String ville) {
         villeDeNaissance.setValue(ville);
     }
-    public StringProperty villeDeNaissanceProperty() {
-        return villeDeNaissance;
-    }
 
+    public String getVilleDeNaissance(){
+        return villeDeNaissance.getValue();
+    }
 }
