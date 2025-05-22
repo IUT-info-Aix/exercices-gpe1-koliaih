@@ -10,10 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
@@ -25,8 +23,6 @@ public class ConvertisseurTemperatures extends Application {
         primaryStage.setHeight(300);
         HBox root = new HBox(10);
         Scene scene = new Scene(root, 200, 400);
-
-
 
         // Créer les propriétés pour les températures
         DoubleProperty celsius = new SimpleDoubleProperty(0);
@@ -65,7 +61,18 @@ public class ConvertisseurTemperatures extends Application {
         Bindings.bindBidirectional(celsiusTextField.textProperty(), celsius, new NumberStringConverter("0.00"));
         Bindings.bindBidirectional(fahrenheitTextField.textProperty(), fahrenheit, new NumberStringConverter("0.00"));
 
+        // Conversion entre Celsius et Fahrenheit
+        celsius.addListener((obs, oldVal, newVal) -> {
+            double celsiusValue = newVal.doubleValue();
+            double fahrenheitValue = celsiusValue * 9 / 5 + 32;
+            fahrenheit.set(fahrenheitValue);
+        });
 
+        fahrenheit.addListener((obs, oldVal, newVal) -> {
+            double fahrenheitValue = newVal.doubleValue();
+            double celsiusValue = (fahrenheitValue - 32) * 5 / 9;
+            celsius.set(celsiusValue);
+        });
 
         Label celsiusLabel = new Label("Celsius");
         Label fahrenheitLabel = new Label("Fahrenheit");
